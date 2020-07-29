@@ -1,5 +1,14 @@
 import express from 'express';
-// const express = require('express');
+import db from './config/database';
+
+//  Test DB
+db.authenticate()
+  .then(() => {
+    console.log('Database connected...');
+  })
+  .catch((err) => {
+    console.log(`Error: ${err}`);
+  });
 
 const app = express();
 
