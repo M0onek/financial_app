@@ -1,0 +1,10 @@
+CREATE DATABASE financial_app;
+
+CREATE TABLE "users" (
+    "id" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "username" varchar(50) NOT NULL UNIQUE,
+    "password" varchar(50) NOT NULL,
+    "email" varchar(255) NOT NULL UNIQUE,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone
+);
