@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import db from './config/database';
 import userRoute from './routes/users';
 
@@ -13,11 +14,13 @@ db.authenticate()
 
 const app = express();
 
+const jsonParser = bodyParser.json();
+
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.use('/users', userRoute);
+app.use('/users', jsonParser, userRoute);
 
 app.listen(8000, () => {
   console.log('Example app listening on port 8000!');

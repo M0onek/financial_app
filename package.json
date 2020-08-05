@@ -5,17 +5,21 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint src/",
-    "dev": "nodemon src/start.js"
+    "dev": "nodemon src/start.js",
+    "db-create": "psql postgres -U szymon.krzywiecki -f DBCreate",
+    "db-drop": "psql postgres -U szymon.krzywiecki -f DBDrop"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "pg": "^8.3.0",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^6.3.3"
+    "sequelize": "^6.3.3",
+    "validator": "^13.1.1"
   },
   "devDependencies": {
     "eslint": "^7.5.0",
