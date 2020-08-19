@@ -15,6 +15,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
+    if (!user) res.status(404).send();
     res.send(user).status(200);
   } catch (error) {
     res.status(500).send(error);
@@ -23,6 +24,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
+    console.log(req.body);
     const user = await User.create(req.body);
     res.status(201).send(user);
   } catch (error) {
