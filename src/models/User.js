@@ -3,12 +3,12 @@ import validator from 'validator';
 import db from '../config/database';
 
 const User = db.define('user', {
-  id: {
+  userId: {
     type: Sequelize.UUIDV4,
     primaryKey: true,
     autoIncrement: true,
   },
-  username: {
+  name: {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,
