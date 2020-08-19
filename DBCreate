@@ -1,10 +1,22 @@
 CREATE DATABASE financial_app;
 
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE "users" (
-    "id" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
-    "username" varchar(50) NOT NULL UNIQUE,
+    "userId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "name" varchar(50) NOT NULL UNIQUE,
     "password" varchar(50) NOT NULL,
     "email" varchar(255) NOT NULL UNIQUE,
     "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+CREATE TABLE "accounts" (
+    "userId" uuid NOT NULL,
+    "accountId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
+    "name" varchar(50) NOT NULL NOT NULL,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT user_fk FOREIGN KEY ("userId")
+        REFERENCES public.users ("userId")
 );
