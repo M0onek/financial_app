@@ -14,9 +14,33 @@ CREATE TABLE "users" (
 CREATE TABLE "accounts" (
     "userId" uuid NOT NULL,
     "accountId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
-    "name" varchar(50) NOT NULL NOT NULL,
+    "name" varchar(50) NOT NULL,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL,
     CONSTRAINT user_fk FOREIGN KEY ("userId")
         REFERENCES public.users ("userId")
+);
+
+CREATE TABLE "incomes" (
+    "incomeId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
+    "accountId" uuid NOT NULL,
+    "amount" decimal NOT NULL,
+    "comment" varchar(255),
+    "date" DATE NOT NULL DEFAULT CURRENT_DATE,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT account_fk FOREIGN KEY ("accountId")
+        REFERENCES public.accounts ("accountId")
+);
+
+CREATE TABLE "expenses" (
+    "expenseId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
+    "accountId" uuid NOT NULL,
+    "amount" decimal NOT NULL,
+    "comment" varchar(255),
+    "date" DATE NOT NULL DEFAULT CURRENT_DATE,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT account_fk FOREIGN KEY ("accountId")
+        REFERENCES public.accounts ("accountId")
 );
