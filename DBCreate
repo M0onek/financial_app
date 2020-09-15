@@ -17,30 +17,41 @@ CREATE TABLE "accounts" (
     "name" varchar(50) NOT NULL,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL,
-    CONSTRAINT user_fk FOREIGN KEY ("userId")
-        REFERENCES public.users ("userId")
+    FOREIGN KEY ("userId") REFERENCES public.users ("userId") ON DELETE CASCADE
+);
+
+CREATE TABLE "incomeCategories" (
+    "categoryId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
+    "name" varchar(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE "expenseCategories" (
+    "categoryId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
+    "name" varchar(50) NOT NULL UNIQUE
 );
 
 CREATE TABLE "incomes" (
     "incomeId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
     "accountId" uuid NOT NULL,
     "amount" decimal NOT NULL,
+    "categoryId" uuid NOT NULL,
     "comment" varchar(255),
     "date" DATE NOT NULL DEFAULT CURRENT_DATE,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL,
-    CONSTRAINT account_fk FOREIGN KEY ("accountId")
-        REFERENCES public.accounts ("accountId")
+    FOREIGN KEY ("accountId") REFERENCES public.accounts ("accountId") ON DELETE CASCADE,
+    FOREIGN KEY ("categoryId") REFERENCES public.incomeCategories ("categoryId") ON DELETE RESTRICT
 );
 
 CREATE TABLE "expenses" (
     "expenseId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
     "accountId" uuid NOT NULL,
     "amount" decimal NOT NULL,
+    "categoryId" uuid NOT NULL,
     "comment" varchar(255),
     "date" DATE NOT NULL DEFAULT CURRENT_DATE,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL,
-    CONSTRAINT account_fk FOREIGN KEY ("accountId")
-        REFERENCES public.accounts ("accountId")
+    FOREIGN KEY ("accountId") REFERENCES public.accounts ("accountId") ON DELETE CASCADE,
+    FOREIGN KEY ("categoryId") REFERENCES public.expenseCategories ("categoryId") ON DELETE RESTRICT
 );
