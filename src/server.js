@@ -4,6 +4,7 @@ import db from './config/database';
 import userRoute from './routes/users';
 import accountRoute from './routes/accounts';
 import incomeRoute from './routes/incomes';
+import expenseRoute from './routes/expenses';
 
 //  Test DB
 db.authenticate()
@@ -27,6 +28,8 @@ app.use('/users', jsonParser, userRoute);
 app.use('/', jsonParser, accountRoute);
 
 app.use('/', jsonParser, incomeRoute);
+
+app.use('/', jsonParser, expenseRoute);
 
 app.listen(8000, () => {
   console.log('Example app listening on port 8000!');
