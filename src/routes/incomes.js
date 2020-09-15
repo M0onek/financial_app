@@ -20,7 +20,7 @@ router.get('/users/:id/accounts/:accountId/incomes/:incomeId', async (req, res) 
   try {
     const income = await Income.findByPk(req.params.incomeId);
     if (!income) res.status(404).send();
-    res.send(income).status(200);
+    else res.send(income).status(200);
   } catch (error) {
     res.status(500).send(error);
   }
