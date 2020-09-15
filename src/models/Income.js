@@ -17,6 +17,14 @@ const Income = db.define('income', {
     allowNull: false,
     required: true,
   },
+  category: {
+    type: Sequelize.UUIDV4,
+    references: 'incomeCategories',
+    referencesKey: 'categoryId',
+  },
+  comment: {
+    type: Sequelize.STRING,
+  },
   date: {
     type: Sequelize.DATE,
     defaultValue: Date.now(),

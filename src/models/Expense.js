@@ -17,6 +17,14 @@ const Expense = db.define('expense', {
     allowNull: false,
     required: true,
   },
+  category: {
+    type: Sequelize.UUIDV4,
+    references: 'expenseCategories',
+    referencesKey: 'categoryId',
+  },
+  comment: {
+    type: Sequelize.STRING,
+  },
   date: {
     type: Sequelize.DATE,
     defaultValue: Date.now(),
