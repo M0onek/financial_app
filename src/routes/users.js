@@ -12,9 +12,9 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:userId', async (req, res) => {
   try {
-    const user = await User.findByPk(req.params.id);
+    const user = await User.findByPk(req.params.userId);
     if (!user) res.status(404).send();
     else res.send(user).status(200);
   } catch (error) {
@@ -31,10 +31,10 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:userId', async (req, res) => {
   const updates = Object.keys(req.body);
   try {
-    const user = await User.findByPk(req.params.id);
+    const user = await User.findByPk(req.params.userId);
     if (!user) res.status(404).send();
     else {
       updates.forEach((update) => {
@@ -48,16 +48,16 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
+router.delete('/:userId', async (req, res) => {
+  const { userId } = req.params;
   try {
-    const user = await User.findByPk(id);
+    const user = await User.findByPk(userId);
 
     if (!user) res.status(404).send();
     else {
       await User.destroy({
         where: {
-          id,
+          userId,
         },
       });
       res.status(200).send(user);
