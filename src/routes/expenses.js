@@ -40,11 +40,14 @@ router.patch('/users/:id/accounts/:accountId/expenses/:expenseId', async (req, r
   const updates = Object.keys(req.body);
   try {
     const expense = await Expense.findByPk(req.params.expenseId);
-    updates.forEach((update) => {
-      expense[update] = req.body[update];
-    });
-    expense.save();
-    res.status(200).send(expense);
+    if (!expense) res.status(404).send();
+    else {
+      updates.forEach((update) => {
+        expense[update] = req.body[update];
+      });
+      expense.save();
+      res.status(200).send(expense);
+    }
   } catch (error) {
     res.status(400).send(error);
   }
@@ -56,13 +59,14 @@ router.delete('/users/:id/accounts/:accountId/expenses/:expenseId', async (req, 
     const expense = await Expense.findByPk(expenseId);
 
     if (!expense) res.status(404).send();
-
-    await Expense.destroy({
-      where: {
-        expenseId,
-      },
-    });
-    res.status(200).send(expense);
+    else {
+      await Expense.destroy({
+        where: {
+          expenseId,
+        },
+      });
+      res.status(200).send(expense);
+    }
   } catch (error) {
     res.status(400).send(error);
   }

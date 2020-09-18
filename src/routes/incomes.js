@@ -40,11 +40,14 @@ router.patch('/users/:id/accounts/:accountId/incomes/:incomeId', async (req, res
   const updates = Object.keys(req.body);
   try {
     const income = await Income.findByPk(req.params.incomeId);
-    updates.forEach((update) => {
-      income[update] = req.body[update];
-    });
-    income.save();
-    res.status(200).send(income);
+    if (!income) res.status(404).send();
+    else {
+      updates.forEach((update) => {
+        income[update] = req.body[update];
+      });
+      income.save();
+      res.status(200).send(income);
+    }
   } catch (error) {
     res.status(400).send(error);
   }
@@ -56,13 +59,14 @@ router.delete('/users/:id/accounts/:accountId/incomes/:incomeId', async (req, re
     const income = await Income.findByPk(incomeId);
 
     if (!income) res.status(404).send();
-
-    await Income.destroy({
-      where: {
-        incomeId,
-      },
-    });
-    res.status(200).send(income);
+    else {
+      await Income.destroy({
+        where: {
+          incomeId,
+        },
+      });
+      res.status(200).send(income);
+    }
   } catch (error) {
     res.status(400).send(error);
   }
