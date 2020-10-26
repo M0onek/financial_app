@@ -22,12 +22,20 @@ CREATE TABLE "accounts" (
 
 CREATE TABLE "incomecategories" (
     "categoryId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
-    "name" varchar(50) NOT NULL UNIQUE
+    "accountId" uuid NOT NULL,
+    "name" varchar(50) NOT NULL UNIQUE,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    FOREIGN KEY ("accountId") REFERENCES public.accounts ("accountId") ON DELETE CASCADE
 );
 
 CREATE TABLE "expensecategories" (
     "categoryId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
-    "name" varchar(50) NOT NULL UNIQUE
+    "accountId" uuid NOT NULL,
+    "name" varchar(50) NOT NULL UNIQUE,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    FOREIGN KEY ("accountId") REFERENCES public.accounts ("accountId") ON DELETE CASCADE
 );
 
 CREATE TABLE "incomes" (
