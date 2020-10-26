@@ -19,7 +19,7 @@ const Income = db.define('income', {
   },
   category: {
     type: Sequelize.UUIDV4,
-    references: 'incomeCategories',
+    references: 'incomeCategory',
     referencesKey: 'categoryId',
   },
   comment: {
