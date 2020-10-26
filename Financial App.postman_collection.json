@@ -53,7 +53,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"m0onek\",\n    \"password\": \"password\",\n    \"email\": \"thisismyemail@email.com\"\n}",
+							"raw": "{\n    \"name\": \"m0onek\",\n    \"password\": \"password\",\n    \"email\": \"thisismyemail@email.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -259,6 +259,532 @@
 								"8d7b893e-ad47-4501-8d83-d221a0423db0",
 								"accounts",
 								"97cf8712-9db1-4032-b65c-a6e06b41a5b8"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Income",
+			"item": [
+				{
+					"name": "Read all incomes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/users/8d7b893e-ad47-4501-8d83-d221a0423db0/accounts/7b270b24-bf4c-4dbc-9e5f-c68c2648fca6/incomes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"8d7b893e-ad47-4501-8d83-d221a0423db0",
+								"accounts",
+								"7b270b24-bf4c-4dbc-9e5f-c68c2648fca6",
+								"incomes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create income",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": \"2400\",\r\n    \"comment\": \"salary\",\r\n    \"date\": \"2020-09-10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/users/8d7b893e-ad47-4501-8d83-d221a0423db0/accounts/7b270b24-bf4c-4dbc-9e5f-c68c2648fca6/incomes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"8d7b893e-ad47-4501-8d83-d221a0423db0",
+								"accounts",
+								"7b270b24-bf4c-4dbc-9e5f-c68c2648fca6",
+								"incomes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read income",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/users/8d7b893e-ad47-4501-8d83-d221a0423db0/accounts/7b270b24-bf4c-4dbc-9e5f-c68c2648fca6/incomes/18a3be26-4b75-40fc-9e4b-302d7ee4e5e3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"8d7b893e-ad47-4501-8d83-d221a0423db0",
+								"accounts",
+								"7b270b24-bf4c-4dbc-9e5f-c68c2648fca6",
+								"incomes",
+								"18a3be26-4b75-40fc-9e4b-302d7ee4e5e3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update income",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": \"50\",\r\n    \"date\": \"2020-09-10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/users/8d7b893e-ad47-4501-8d83-d221a0423db0/accounts/7b270b24-bf4c-4dbc-9e5f-c68c2648fca6/incomes/18a3be26-4b75-40fc-9e4b-302d7ee4e5e3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"8d7b893e-ad47-4501-8d83-d221a0423db0",
+								"accounts",
+								"7b270b24-bf4c-4dbc-9e5f-c68c2648fca6",
+								"incomes",
+								"18a3be26-4b75-40fc-9e4b-302d7ee4e5e3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete income",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/users/8d7b893e-ad47-4501-8d83-d221a0423db0/accounts/7b270b24-bf4c-4dbc-9e5f-c68c2648fca6/incomes/18a3be26-4b75-40fc-9e4b-302d7ee4e5e3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"8d7b893e-ad47-4501-8d83-d221a0423db0",
+								"accounts",
+								"7b270b24-bf4c-4dbc-9e5f-c68c2648fca6",
+								"incomes",
+								"18a3be26-4b75-40fc-9e4b-302d7ee4e5e3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Expense",
+			"item": [
+				{
+					"name": "Read all expenses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/users/8d7b893e-ad47-4501-8d83-d221a0423db0/accounts/7b270b24-bf4c-4dbc-9e5f-c68c2648fca6/incomes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"8d7b893e-ad47-4501-8d83-d221a0423db0",
+								"accounts",
+								"7b270b24-bf4c-4dbc-9e5f-c68c2648fca6",
+								"incomes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create expenses",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": \"2400\",\r\n    \"comment\": \"groceries\",\r\n    \"date\": \"2020-09-10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/users/8d7b893e-ad47-4501-8d83-d221a0423db0/accounts/7b270b24-bf4c-4dbc-9e5f-c68c2648fca6/expenses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"8d7b893e-ad47-4501-8d83-d221a0423db0",
+								"accounts",
+								"7b270b24-bf4c-4dbc-9e5f-c68c2648fca6",
+								"expenses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read expenses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/users/8d7b893e-ad47-4501-8d83-d221a0423db0/accounts/7b270b24-bf4c-4dbc-9e5f-c68c2648fca6/incomes/18a3be26-4b75-40fc-9e4b-302d7ee4e5e3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"8d7b893e-ad47-4501-8d83-d221a0423db0",
+								"accounts",
+								"7b270b24-bf4c-4dbc-9e5f-c68c2648fca6",
+								"incomes",
+								"18a3be26-4b75-40fc-9e4b-302d7ee4e5e3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update expenses",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": \"50\",\r\n    \"date\": \"2020-09-10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/users/8d7b893e-ad47-4501-8d83-d221a0423db0/accounts/7b270b24-bf4c-4dbc-9e5f-c68c2648fca6/incomes/18a3be26-4b75-40fc-9e4b-302d7ee4e5e3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"8d7b893e-ad47-4501-8d83-d221a0423db0",
+								"accounts",
+								"7b270b24-bf4c-4dbc-9e5f-c68c2648fca6",
+								"incomes",
+								"18a3be26-4b75-40fc-9e4b-302d7ee4e5e3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete expenses",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/users/8d7b893e-ad47-4501-8d83-d221a0423db0/accounts/7b270b24-bf4c-4dbc-9e5f-c68c2648fca6/incomes/18a3be26-4b75-40fc-9e4b-302d7ee4e5e3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"8d7b893e-ad47-4501-8d83-d221a0423db0",
+								"accounts",
+								"7b270b24-bf4c-4dbc-9e5f-c68c2648fca6",
+								"incomes",
+								"18a3be26-4b75-40fc-9e4b-302d7ee4e5e3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Income category",
+			"item": [
+				{
+					"name": "Read all income categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create income category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update income category",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"saaaalary\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/users/cd781cd8-b8e6-47fc-aced-f29248b05dd3/accounts/c18e01a7-1e5d-4932-a309-0700a7cb5727/incomeCategories/9c668379-3a80-45cf-b004-f49c83ebdedd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"cd781cd8-b8e6-47fc-aced-f29248b05dd3",
+								"accounts",
+								"c18e01a7-1e5d-4932-a309-0700a7cb5727",
+								"incomeCategories",
+								"9c668379-3a80-45cf-b004-f49c83ebdedd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete income category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/users/cd781cd8-b8e6-47fc-aced-f29248b05dd3/accounts/c18e01a7-1e5d-4932-a309-0700a7cb5727/incomeCategories/9c668379-3a80-45cf-b004-f49c83ebdedd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"cd781cd8-b8e6-47fc-aced-f29248b05dd3",
+								"accounts",
+								"c18e01a7-1e5d-4932-a309-0700a7cb5727",
+								"incomeCategories",
+								"9c668379-3a80-45cf-b004-f49c83ebdedd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read income category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/users/cd781cd8-b8e6-47fc-aced-f29248b05dd3/accounts/433e49cd-a93f-46f9-95b0-50ace69fdca4/incomeCategories/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"cd781cd8-b8e6-47fc-aced-f29248b05dd3",
+								"accounts",
+								"433e49cd-a93f-46f9-95b0-50ace69fdca4",
+								"incomeCategories",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Expense category",
+			"item": [
+				{
+					"name": "Delete expense category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/users/cd781cd8-b8e6-47fc-aced-f29248b05dd3/accounts/c18e01a7-1e5d-4932-a309-0700a7cb5727/expenseCategories/9c668379-3a80-45cf-b004-f49c83ebdedd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"cd781cd8-b8e6-47fc-aced-f29248b05dd3",
+								"accounts",
+								"c18e01a7-1e5d-4932-a309-0700a7cb5727",
+								"expenseCategories",
+								"9c668379-3a80-45cf-b004-f49c83ebdedd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update expense category",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"saaaalary\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/users/cd781cd8-b8e6-47fc-aced-f29248b05dd3/accounts/c18e01a7-1e5d-4932-a309-0700a7cb5727/expenseCategories/9c668379-3a80-45cf-b004-f49c83ebdedd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"cd781cd8-b8e6-47fc-aced-f29248b05dd3",
+								"accounts",
+								"c18e01a7-1e5d-4932-a309-0700a7cb5727",
+								"expenseCategories",
+								"9c668379-3a80-45cf-b004-f49c83ebdedd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create expense category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/users/cd781cd8-b8e6-47fc-aced-f29248b05dd3/accounts/c18e01a7-1e5d-4932-a309-0700a7cb5727/expenseCategories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"cd781cd8-b8e6-47fc-aced-f29248b05dd3",
+								"accounts",
+								"c18e01a7-1e5d-4932-a309-0700a7cb5727",
+								"expenseCategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read all expense categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/users/cd781cd8-b8e6-47fc-aced-f29248b05dd3/accounts/c18e01a7-1e5d-4932-a309-0700a7cb5727/expenseCategories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"cd781cd8-b8e6-47fc-aced-f29248b05dd3",
+								"accounts",
+								"c18e01a7-1e5d-4932-a309-0700a7cb5727",
+								"expenseCategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read expense category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/users/cd781cd8-b8e6-47fc-aced-f29248b05dd3/accounts/433e49cd-a93f-46f9-95b0-50ace69fdca4/incomeCategories/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"cd781cd8-b8e6-47fc-aced-f29248b05dd3",
+								"accounts",
+								"433e49cd-a93f-46f9-95b0-50ace69fdca4",
+								"incomeCategories",
+								""
 							]
 						}
 					},
