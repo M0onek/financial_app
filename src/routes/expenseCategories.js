@@ -3,12 +3,12 @@ import ExpenseCategory from '../models/ExpenseCategory';
 
 const router = express.Router();
 
-router.get('/users/:id/accounts/:accId/expensecategories', async (req, res) => {
+router.get('/users/:id/accounts/:accountId/expensecategories', async (req, res) => {
   try {
     // const { accountId } = req.params;
     const expenseCategories = await ExpenseCategory.findAll({
       where: {
-        accountId: req.params.accId,
+        accountId: req.params.accountId,
       },
     });
     res.send(expenseCategories).status(200);
