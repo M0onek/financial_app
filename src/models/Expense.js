@@ -17,7 +17,7 @@ const Expense = db.define('expense', {
     allowNull: false,
     required: true,
   },
-  category: {
+  categoryId: {
     type: Sequelize.UUIDV4,
     references: 'expenseCategory',
     referencesKey: 'categoryId',

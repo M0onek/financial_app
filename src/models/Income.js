@@ -17,7 +17,7 @@ const Income = db.define('income', {
     allowNull: false,
     required: true,
   },
-  category: {
+  categoryId: {
     type: Sequelize.UUIDV4,
     references: 'incomeCategory',
     referencesKey: 'categoryId',
