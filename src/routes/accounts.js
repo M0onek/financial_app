@@ -1,7 +1,20 @@
 import express from 'express';
 import Account from '../models/Account';
+import auth from '../middleware/auth';
 
 const router = express.Router();
+
+router.post('/accounts', auth, async (req, res) => {
+  try {
+    const account = await Account.create({
+      ...req.body,
+      userId: req.user.userId,
+    });
+    res.status(201).send(account);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
 
 router.get('/users/:id/accounts', async (req, res) => {
   try {
@@ -23,16 +36,6 @@ router.get('/users/:id/accounts/:accId', async (req, res) => {
     else res.send(account).status(200);
   } catch (error) {
     res.status(500).send(error);
-  }
-});
-
-router.post('/users/:id/accounts', async (req, res) => {
-  try {
-    req.body.userId = req.params.id;
-    const account = await Account.create(req.body);
-    res.status(201).send(account);
-  } catch (error) {
-    res.status(400).send(error);
   }
 });
 

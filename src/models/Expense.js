@@ -1,39 +1,39 @@
-import Sequelize from 'sequelize';
+import { DataTypes } from 'sequelize';
 import db from '../config/database';
 
 const Expense = db.define('expense', {
   expenseId: {
-    type: Sequelize.UUIDV4,
+    type: DataTypes.UUIDV4,
     primaryKey: true,
     autoIncrement: true,
   },
   accountId: {
-    type: Sequelize.UUIDV4,
+    type: DataTypes.UUIDV4,
     references: 'accounts',
     referencesKey: 'accountId',
   },
   amount: {
-    type: Sequelize.DECIMAL,
+    type: DataTypes.DECIMAL,
     allowNull: false,
     required: true,
   },
   categoryId: {
-    type: Sequelize.UUIDV4,
+    type: DataTypes.UUIDV4,
     references: 'expenseCategory',
     referencesKey: 'categoryId',
   },
   comment: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
   },
   date: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE,
     defaultValue: Date.now(),
   },
   createdAt: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE,
   },
   updatedAt: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE,
   },
 });
 

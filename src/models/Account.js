@@ -1,27 +1,27 @@
-import Sequelize from 'sequelize';
+import { DataTypes } from 'sequelize';
 import db from '../config/database';
 
 const Account = db.define('account', {
   userId: {
-    type: Sequelize.UUIDV4,
+    type: DataTypes.UUIDV4,
     references: 'users',
     referencesKey: 'userId',
   },
   accountId: {
-    type: Sequelize.UUIDV4,
+    type: DataTypes.UUIDV4,
     primaryKey: true,
     autoIncrement: true,
   },
   name: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     required: true,
   },
   createdAt: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE,
   },
   updatedAt: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE,
   },
 });
 
