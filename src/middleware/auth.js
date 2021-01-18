@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
+import Account from '../models/Account';
 
 const auth = async (req, res, next) => {
   try {
@@ -9,6 +10,7 @@ const auth = async (req, res, next) => {
       where: {
         userId: decoded.userId,
       },
+      include: Account,
     });
 
     if (!user) {
