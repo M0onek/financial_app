@@ -1,5 +1,7 @@
 import { DataTypes } from 'sequelize';
 import db from '../config/database';
+import Account from './Account';
+import IncomeCategory from './IncomeCategory';
 
 const Income = db.define('income', {
   incomeId: {
@@ -7,21 +9,21 @@ const Income = db.define('income', {
     primaryKey: true,
     autoIncrement: true,
   },
-  accountId: {
-    type: DataTypes.UUIDV4,
-    references: 'accounts',
-    referencesKey: 'accountId',
-  },
+  // accountId: {
+  //   type: DataTypes.UUIDV4,
+  //   references: 'Account',
+  //   referencesKey: 'accountId',
+  // },
   amount: {
     type: DataTypes.DECIMAL,
     allowNull: false,
     required: true,
   },
-  categoryId: {
-    type: DataTypes.UUIDV4,
-    references: 'incomeCategory',
-    referencesKey: 'categoryId',
-  },
+  // categoryId: {
+  //   type: DataTypes.UUIDV4,
+  //   references: 'IncomeCategory',
+  //   referencesKey: 'categoryId',
+  // },
   comment: {
     type: DataTypes.STRING,
   },
@@ -36,5 +38,8 @@ const Income = db.define('income', {
     type: DataTypes.DATE,
   },
 });
+
+// Income.belongsTo(Account);//, { foreignKey: 'accountId' });
+// Income.hasOne(IncomeCategory);
 
 export default Income;

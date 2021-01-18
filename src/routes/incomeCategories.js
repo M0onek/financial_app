@@ -1,14 +1,19 @@
 import express from 'express';
-import IncomeCategory from '../models/IncomeCategory';
+import { IncomeCategory } from '../models';
+import auth from '../middleware/auth';
 
 const router = express.Router();
 
-router.get('/users/:id/accounts/:accountId/incomeCategories', async (req, res) => {
+router.get('/accounts/:accountId/income_categories', auth, async (req, res) => {
+  const { accountId } = req.params;
+  const { accounts } = req.user;
   try {
-    // const { accountId } = req.params;
+    const isAccValid = accounts.find((account) => account.accountId == accountId );
+    if (!isAccValid) throw new Error('There is no account with that id');
+
     const incomeCategories = await IncomeCategory.findAll({
       where: {
-        accountId: req.params.accountId,
+        accountId,
       },
     });
     res.send(incomeCategories).status(200);
@@ -17,57 +22,96 @@ router.get('/users/:id/accounts/:accountId/incomeCategories', async (req, res) =
   }
 });
 
-router.get('/users/:id/accounts/:accountId/incomeCategories/:categoryId', async (req, res) => {
+router.get('/accounts/:accountId/income_categories/:categoryId', auth, async (req, res) => {
+  const { accountId } = req.params;
+  const { categoryId } = req.params;
+  const { accounts } = req.user;
   try {
-    const incomeCategory = await IncomeCategory.findByPk(req.params.categoryId);
-    if (!incomeCategory) res.status(404).send();
-    else res.send(incomeCategory).status(200);
+    const isAccValid = accounts.find((account) => account.accountId == accountId );
+    if (!isAccValid) throw new Error('There is no account with that id');
+
+    const incomeCategory = await IncomeCategory.findOne({
+      where: {
+        categoryId,
+        accountId,
+      },
+    });
+    if (!incomeCategory) return res.status(404).send();
+    res.send(incomeCategory).status(200);
   } catch (error) {
     res.status(500).send(error);
   }
 });
 
-router.post('/users/:id/accounts/:accountId/incomeCategories', async (req, res) => {
+router.post('/accounts/:accountId/income_categories', auth, async (req, res) => {
+  const { accountId } = req.params;
+  const { accounts } = req.user;
   try {
-    req.body.accountId = req.params.accountId;
-    const incomeCategory = await IncomeCategory.create(req.body);
+    const isAccValid = accounts.find((account) => account.accountId == accountId );
+    if (!isAccValid) throw new Error('There is no account with that id');
+
+    const incomeCategory = await IncomeCategory.create({
+      ...req.body,
+      accountId,
+    });
     res.status(201).send(incomeCategory);
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
-router.patch('/users/:id/accounts/:accountId/incomeCategories/:categoryId', async (req, res) => {
+router.patch('/accounts/:accountId/income_categories/:categoryId', auth, async (req, res) => {
+  const { categoryId } = req.params;
+  const { accountId } = req.params;
+  const { accounts } = req.user;
   const updates = Object.keys(req.body);
   try {
-    const incomeCategory = await IncomeCategory.findByPk(req.params.categoryId);
-    if (!incomeCategory) res.status(404).send();
-    else {
-      updates.forEach((update) => {
-        incomeCategory[update] = req.body[update];
-      });
-      incomeCategory.save();
-      res.status(200).send(incomeCategory);
-    }
+    const isAccValid = accounts.find((account) => account.accountId == accountId );
+    if (!isAccValid) throw new Error('There is no account with that id');
+
+    const incomeCategory = await IncomeCategory.findOne({
+      where: {
+        categoryId,
+        accountId,
+      }
+    });
+
+    if (!incomeCategory) return res.status(404).send();
+
+    updates.forEach((update) => {
+      incomeCategory[update] = req.body[update];
+    });
+    incomeCategory.save();
+    res.status(200).send(incomeCategory);
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
-router.delete('/users/:id/accounts/:accountId/incomeCategories/:categoryId', async (req, res) => {
+router.delete('/accounts/:accountId/income_categories/:categoryId', auth, async (req, res) => {
   const { categoryId } = req.params;
+  const { accountId } = req.params;
+  const { accounts } = req.user;
   try {
-    const incomeCategory = await IncomeCategory.findByPk(categoryId);
+    const isAccValid = accounts.find((account) => account.accountId == accountId );
+    if (!isAccValid) throw new Error('There is no account with that id');
+
+    const incomeCategory = await IncomeCategory.findOne({
+      where: {
+        categoryId,
+        accountId,
+      }
+    });
 
     if (!incomeCategory) res.status(404).send();
-    else {
-      await IncomeCategory.destroy({
-        where: {
-          categoryId,
-        },
-      });
-      res.status(200).send(incomeCategory);
-    }
+
+    await incomeCategory.destroy({
+      where: {
+        categoryId,
+        accountId,
+      },
+    });
+    res.status(200).send(incomeCategory);
   } catch (error) {
     res.status(400).send(error);
   }

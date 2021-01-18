@@ -1,21 +1,22 @@
 import express from 'express';
-import User from '../models/User';
+import { User } from '../models';
 import auth from '../middleware/auth';
 
 const router = express.Router();
 
-router.post('/users', async (req, res) => {
-  const user = await User.create(req.body);
+router.post('/signup', async (req, res) => {
   try {
-    await user.save();
+    console.log(req.body.name);
+    const user = await User.create(req.body);
+    // await user.save();
     const token = await user.generateToken();
-    res.status(201).send({ user, token });
+    res.status(201).render('home.pug', { user, token });
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
-router.post('/users/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const user = await User.findUserByCredentials(req.body.email, req.body.password);
     const token = await user.generateToken();
@@ -25,7 +26,7 @@ router.post('/users/login', async (req, res) => {
   }
 });
 
-router.post('/users/logout', auth, async (req, res) => {
+router.post('/logout', auth, async (req, res) => {
   try {
     req.user.tokens = req.user.tokens.filter((token) => token !== req.token);
     await req.user.save();
@@ -36,7 +37,7 @@ router.post('/users/logout', auth, async (req, res) => {
   }
 });
 
-router.post('/users/logoutAll', auth, async (req, res) => {
+router.post('/logoutAll', auth, async (req, res) => {
   try {
     req.user.tokens = [];
     await req.user.save();
@@ -46,17 +47,16 @@ router.post('/users/logoutAll', auth, async (req, res) => {
   }
 });
 
-router.get('/users/me', auth, async (req, res) => {
+router.get('/me', auth, async (req, res) => {
   res.send(req.user);
 });
 
-router.patch('/users/me', auth, async (req, res) => {
+router.patch('/me', auth, async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = ['name', 'email', 'password'];
   const isValidUpdate = updates.every((update) => allowedUpdates.includes(update));
 
   if (!isValidUpdate) {
-    console.log('dupa??');
     return res.status(400).send({ error: 'Invalid updates' });
   }
 
@@ -66,12 +66,11 @@ router.patch('/users/me', auth, async (req, res) => {
     await req.user.save();
     res.send(req.user);
   } catch (error) {
-    console.log('dupa??asdads');
     res.status(400).send(error);
   }
 });
 
-router.delete('/users/me', auth, async (req, res) => {
+router.delete('/me', auth, async (req, res) => {
   try {
     await User.destroy({ where: { userId: req.user.userId } });
     res.status(200).send(req.user);

@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import validator from 'validator';
+// import validator from 'validator';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import db from '../config/database';
@@ -15,6 +15,11 @@ const User = db.define('user', {
     allowNull: false,
     required: true,
     unique: true,
+    // validate: {
+    //   isAlphanumeric: {
+    //     msg: 'Provide name with letters and numbers only.',
+    //   },
+    // },
   },
   email: {
     type: DataTypes.STRING,
@@ -22,15 +27,24 @@ const User = db.define('user', {
     required: true,
     unique: true,
     trim: true,
-    lowercase: true,
-    validate(value) {
-      if (!validator.isEmail(value)) throw new Error('Email is invalid');
-    },
+    lowercase: true, //sprawdzic
+    // validate: {
+    //   isValidEmail(value) {
+    //     if (!validator.isEmail(value)) throw new Error('Provide correct email.')
+    //   },
+    // },
   },
   password: {
     type: DataTypes.STRING,
     allowNull: false,
     required: true,
+    trim: true,
+    // validate: {
+    //   is: {
+    //     args: [["^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"]],
+    //     msg: 'Provide secure password.'
+    //   },
+    // },
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -43,9 +57,6 @@ const User = db.define('user', {
     defaultValue: [],
     required: true,
   },
-  accounts: {
-    type: DataTypes.VIRTUAL //tutaj skonczylem 16:00 kursu 114
-  }
 });
 
 User.prototype.generateToken = async function () {
@@ -67,6 +78,7 @@ User.prototype.toJSON = function () {
 
   userObject.password = undefined;
   userObject.tokens = undefined;
+  userObject.accounts = undefined;
   return userObject;
 };
 

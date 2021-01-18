@@ -2,11 +2,11 @@ import { DataTypes } from 'sequelize';
 import db from '../config/database';
 
 const Account = db.define('account', {
-  userId: {
-    type: DataTypes.UUIDV4,
-    references: 'users',
-    referencesKey: 'userId',
-  },
+  // userId: {
+  //   type: DataTypes.UUIDV4,
+  //   references: 'User',
+  //   referencesKey: 'userId',
+  // },
   accountId: {
     type: DataTypes.UUIDV4,
     primaryKey: true,

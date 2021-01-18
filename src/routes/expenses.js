@@ -1,13 +1,19 @@
 import express from 'express';
-import Expense from '../models/Expense';
+import { Expense } from '../models';
+import auth from '../middleware/auth';
 
 const router = express.Router();
 
-router.get('/users/:id/accounts/:accountId/expenses', async (req, res) => {
+router.get('/accounts/:accountId/expenses', auth, async (req, res) => {
+  const { accountId } = req.params;
+  const { accounts } = req.user;
   try {
+    const isAccValid = accounts.find((account) => account.accountId == accountId );
+    if (!isAccValid) throw new Error('There is no account with that id');
+
     const expenses = await Expense.findAll({
       where: {
-        accountId: req.params.accountId,
+        accountId,
       },
     });
     res.send(expenses).status(200);
@@ -16,57 +22,95 @@ router.get('/users/:id/accounts/:accountId/expenses', async (req, res) => {
   }
 });
 
-router.get('/users/:id/accounts/:accountId/expenses/:expenseId', async (req, res) => {
+router.get('/accounts/:accountId/expenses/:expenseId', auth, async (req, res) => {
+  const { accountId } = req.params;
+  const { expenseId } = req.params;
+  const { accounts } = req.user;
   try {
-    const expense = await Expense.findByPk(req.params.expenseId);
-    if (!expense) res.status(404).send();
-    else res.send(expense).status(200);
+    const isAccValid = accounts.find((account) => account.accountId == accountId );
+    if (!isAccValid) throw new Error('There is no account with that id');
+
+    const expense = await Expense.findOne({
+      where: {
+        expenseId,
+        accountId,
+      }
+    });
+    if (!expense) return res.status(404).send();
+    res.send(expense).status(200);
   } catch (error) {
     res.status(500).send(error);
   }
 });
 
-router.post('/users/:id/accounts/:accountId/expenses', async (req, res) => {
+router.post('/accounts/:accountId/expenses', auth, async (req, res) => {
+  const { accountId } = req.params;
+  const { accounts } = req.user;
   try {
-    req.body.accountId = req.params.accountId;
-    const expense = await Expense.create(req.body);
+    const isAccValid = accounts.find((account) => account.accountId == accountId );
+    if (!isAccValid) throw new Error('There is no account with that id');
+
+    const expense = await Expense.create({
+      ...req.body,
+      accountId,
+    });
     res.status(201).send(expense);
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
-router.patch('/users/:id/accounts/:accountId/expenses/:expenseId', async (req, res) => {
+router.patch('/accounts/:accountId/expenses/:expenseId', auth, async (req, res) => {
+  const { accountId } = req.params;
+  const { expenseId } = req.params;
+  const { accounts } = req.user;
   const updates = Object.keys(req.body);
   try {
-    const expense = await Expense.findByPk(req.params.expenseId);
-    if (!expense) res.status(404).send();
-    else {
-      updates.forEach((update) => {
-        expense[update] = req.body[update];
-      });
-      expense.save();
-      res.status(200).send(expense);
-    }
+    const isAccValid = accounts.find((account) => account.accountId == accountId );
+    if (!isAccValid) throw new Error('There is no account with that id');
+
+    const expense = await Expense.findOne({
+      where: {
+        expenseId,
+        accountId,
+      }
+    });
+
+    if (!expense) return res.status(404).send();
+
+    updates.forEach((update) => {
+      expense[update] = req.body[update];
+    });
+    expense.save();
+    res.status(200).send(expense);
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
-router.delete('/users/:id/accounts/:accountId/expenses/:expenseId', async (req, res) => {
+router.delete('/accounts/:accountId/expenses/:expenseId', auth, async (req, res) => {
+  const { accountId } = req.params;
   const { expenseId } = req.params;
+  const { accounts } = req.user;
   try {
-    const expense = await Expense.findByPk(expenseId);
+    const isAccValid = accounts.find((account) => account.accountId == accountId );
+    if (!isAccValid) throw new Error('There is no account with that id');
 
-    if (!expense) res.status(404).send();
-    else {
-      await Expense.destroy({
-        where: {
-          expenseId,
-        },
-      });
-      res.status(200).send(expense);
-    }
+    const expense = await Expense.findOne({
+      where: {
+        expenseId,
+        accountId,
+      }
+    });
+
+    if (!expense) return res.status(404).send();
+
+    await Expense.destroy({
+      where: {
+        expenseId,
+      },
+    });
+    res.status(200).send(expense);
   } catch (error) {
     res.status(400).send(error);
   }

@@ -1,14 +1,19 @@
 import express from 'express';
-import ExpenseCategory from '../models/ExpenseCategory';
+import { ExpenseCategory } from '../models';
+import auth from '../middleware/auth';
 
 const router = express.Router();
 
-router.get('/users/:id/accounts/:accountId/expensecategories', async (req, res) => {
+router.get('/accounts/:accountId/expense_categories', auth, async (req, res) => {
+  const { accountId } = req.params;
+  const { accounts } = req.user;
   try {
-    // const { accountId } = req.params;
+    const isAccValid = accounts.find((account) => account.accountId == accountId );
+    if (!isAccValid) throw new Error('There is no account with that id');
+
     const expenseCategories = await ExpenseCategory.findAll({
       where: {
-        accountId: req.params.accountId,
+        accountId,
       },
     });
     res.send(expenseCategories).status(200);
@@ -17,57 +22,96 @@ router.get('/users/:id/accounts/:accountId/expensecategories', async (req, res) 
   }
 });
 
-router.get('/users/:id/accounts/:accountId/expensecategories/:categoryId', async (req, res) => {
+router.get('/accounts/:accountId/expense_categories/:categoryId', auth, async (req, res) => {
+  const { accountId } = req.params;
+  const { categoryId } = req.params;
+  const { accounts } = req.user;
   try {
-    const expenseCategory = await ExpenseCategory.findByPk(req.params.categoryId);
-    if (!expenseCategory) res.status(404).send();
-    else res.send(expenseCategory).status(200);
+    const isAccValid = accounts.find((account) => account.accountId == accountId );
+    if (!isAccValid) throw new Error('There is no account with that id');
+
+    const expenseCategory = await ExpenseCategory.findOne({
+      where: {
+        categoryId,
+        accountId,
+      },
+    });
+    if (!expenseCategory) return res.status(404).send();
+    res.send(expenseCategory).status(200);
   } catch (error) {
     res.status(500).send(error);
   }
 });
 
-router.post('/users/:id/accounts/:accountId/expensecategories', async (req, res) => {
+router.post('/accounts/:accountId/expense_categories', auth, async (req, res) => {
+  const { accountId } = req.params;
+  const { accounts } = req.user;
   try {
-    req.body.accountId = req.params.accountId;
-    const expenseCategory = await ExpenseCategory.create(req.body);
+    const isAccValid = accounts.find((account) => account.accountId == accountId );
+    if (!isAccValid) throw new Error('There is no account with that id');
+
+    const expenseCategory = await ExpenseCategory.create({
+      ...req.body,
+      accountId,
+    });
     res.status(201).send(expenseCategory);
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
-router.patch('/users/:id/accounts/:accountId/expensecategories/:categoryId', async (req, res) => {
+router.patch('/accounts/:accountId/expense_categories/:categoryId', auth, async (req, res) => {
+  const { categoryId } = req.params;
+  const { accountId } = req.params;
+  const { accounts } = req.user;
   const updates = Object.keys(req.body);
   try {
-    const expenseCategory = await ExpenseCategory.findByPk(req.params.categoryId);
-    if (!expenseCategory) res.status(404).send();
-    else {
-      updates.forEach((update) => {
-        expenseCategory[update] = req.body[update];
-      });
-      expenseCategory.save();
-      res.status(200).send(expenseCategory);
-    }
+    const isAccValid = accounts.find((account) => account.accountId == accountId );
+    if (!isAccValid) throw new Error('There is no account with that id');
+
+    const expenseCategory = await ExpenseCategory.findOne({
+      where: {
+        categoryId,
+        accountId,
+      }
+    });
+
+    if (!expenseCategory) return res.status(404).send();
+
+    updates.forEach((update) => {
+      expenseCategory[update] = req.body[update];
+    });
+    expenseCategory.save();
+    res.status(200).send(expenseCategory);
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
-router.delete('/users/:id/accounts/:accountId/expensecategories/:categoryId', async (req, res) => {
+router.delete('/accounts/:accountId/expense_categories/:categoryId', auth, async (req, res) => {
   const { categoryId } = req.params;
+  const { accountId } = req.params;
+  const { accounts } = req.user;
   try {
-    const expenseCategory = await ExpenseCategory.findByPk(categoryId);
+    const isAccValid = accounts.find((account) => account.accountId == accountId );
+    if (!isAccValid) throw new Error('There is no account with that id');
 
-    if (!expenseCategory) res.status(404).send();
-    else {
-      await expenseCategory.destroy({
-        where: {
-          categoryId,
-        },
-      });
-      res.status(200).send(expenseCategory);
-    }
+    const expenseCategory = await ExpenseCategory.findOne({
+      where: {
+        categoryId,
+        accountId,
+      }
+    });
+
+    if (!expenseCategory) return res.status(404).send();
+
+    await expenseCategory.destroy({
+      where: {
+        categoryId,
+        accountId,
+      },
+    });
+    res.status(200).send(expenseCategory);
   } catch (error) {
     res.status(400).send(error);
   }

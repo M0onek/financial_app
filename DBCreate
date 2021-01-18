@@ -18,7 +18,7 @@ CREATE TABLE "accounts" (
     "name" varchar(50) NOT NULL,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL,
-    FOREIGN KEY ("userId") REFERENCES public.users ("userId") ON DELETE CASCADE
+    FOREIGN KEY ("userId") REFERENCES public."users" ("userId") ON DELETE CASCADE
 );
 
 CREATE TABLE "incomecategories" (
@@ -27,7 +27,7 @@ CREATE TABLE "incomecategories" (
     "name" varchar(50) NOT NULL UNIQUE,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL,
-    FOREIGN KEY ("accountId") REFERENCES public.accounts ("accountId") ON DELETE CASCADE
+    FOREIGN KEY ("accountId") REFERENCES public."accounts" ("accountId") ON DELETE CASCADE
 );
 
 CREATE TABLE "expensecategories" (
@@ -36,7 +36,7 @@ CREATE TABLE "expensecategories" (
     "name" varchar(50) NOT NULL UNIQUE,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL,
-    FOREIGN KEY ("accountId") REFERENCES public.accounts ("accountId") ON DELETE CASCADE
+    FOREIGN KEY ("accountId") REFERENCES public."accounts" ("accountId") ON DELETE CASCADE
 );
 
 CREATE TABLE "incomes" (
@@ -48,8 +48,8 @@ CREATE TABLE "incomes" (
     "date" DATE NOT NULL DEFAULT CURRENT_DATE,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL,
-    FOREIGN KEY ("accountId") REFERENCES public.accounts ("accountId") ON DELETE CASCADE,
-    FOREIGN KEY ("categoryId") REFERENCES public.incomecategories ("categoryId") ON DELETE RESTRICT
+    FOREIGN KEY ("accountId") REFERENCES public."accounts" ("accountId") ON DELETE CASCADE,
+    FOREIGN KEY ("categoryId") REFERENCES public."incomecategories" ("categoryId") ON DELETE CASCADE
 );
 
 CREATE TABLE "expenses" (
@@ -61,6 +61,6 @@ CREATE TABLE "expenses" (
     "date" DATE NOT NULL DEFAULT CURRENT_DATE,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL,
-    FOREIGN KEY ("accountId") REFERENCES public.accounts ("accountId") ON DELETE CASCADE,
-    FOREIGN KEY ("categoryId") REFERENCES public.expensecategories ("categoryId") ON DELETE RESTRICT
+    FOREIGN KEY ("accountId") REFERENCES public."accounts" ("accountId") ON DELETE CASCADE,
+    FOREIGN KEY ("categoryId") REFERENCES public."expensecategories" ("categoryId") ON DELETE CASCADE
 );
