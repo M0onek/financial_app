@@ -5,8 +5,8 @@ import auth from '../middleware/auth';
 const router = express.Router();
 
 router.post('/accounts', auth, async (req, res) => {
-  const userId = req.user.userId;
   try {
+    const userId = req.user.userId;
     const account = await Account.create({
       ...req.body,
       userId,

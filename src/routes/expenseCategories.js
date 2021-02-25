@@ -54,6 +54,7 @@ router.post('/accounts/:accountId/expense_categories', auth, async (req, res) =>
       ...req.body,
       accountId,
     });
+
     res.status(201).send(expenseCategory);
   } catch (error) {
     res.status(400).send(error);

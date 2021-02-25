@@ -1,5 +1,7 @@
 import { DataTypes } from 'sequelize';
 import db from '../config/database';
+import { v4 as uuidv4 } from 'uuid';
+import moment from 'moment';
 import Account from './Account';
 import Expense from './Expense';
 
@@ -13,6 +15,7 @@ const ExpenseCategory = db.define('expensecategory', {
     type: DataTypes.UUIDV4,
     primaryKey: true,
     autoIncrement: true,
+    defaultValue: DataTypes.UUIDV4,
   },
   name: {
     type: DataTypes.STRING(50),

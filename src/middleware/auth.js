@@ -17,19 +17,9 @@ const auth = async (req, res, next) => {
       throw new Error();
     }
 
-    let temp = 0;
-    user.tokens.forEach((authToken) => {
-      if (authToken === token) {
-        req.token = token;
-        req.user = user;
-        temp = 1;
-      }
-    });
-    if (temp === 1) {
-      next();
-    } else {
-      throw new Error();
-    }
+    req.token = token;
+    req.user = user;
+    next();
   } catch (error) {
     res.status(401).send({ error: 'You need to login first!' });
   }

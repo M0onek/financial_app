@@ -1,14 +1,18 @@
 import { DataTypes } from 'sequelize';
 // import validator from 'validator';
+import { v4 as uuidv4 } from 'uuid';
+import moment from 'moment';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import db from '../config/database';
+import Account from './Account';
 
 const User = db.define('user', {
   userId: {
     type: DataTypes.UUIDV4,
     primaryKey: true,
     autoIncrement: true,
+    defaultValue: DataTypes.UUIDV4,
   },
   name: {
     type: DataTypes.STRING,
@@ -49,13 +53,13 @@ const User = db.define('user', {
   createdAt: {
     type: DataTypes.DATE,
   },
-  updatedAt: {
-    type: DataTypes.DATE,
-  },
   tokens: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
+    type: DataTypes.ARRAY(DataTypes.JSON),
     defaultValue: [],
     required: true,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
   },
 });
 
@@ -63,10 +67,7 @@ User.prototype.generateToken = async function () {
   const user = this;
   const token = jwt.sign({ userId: user.userId.toString() }, 'sec155');
 
-  user.tokens = [
-    ...user.tokens,
-    token,
-  ];
+  user.tokens = user.tokens.concat({ token });
   await user.save();
 
   return token;
@@ -83,7 +84,12 @@ User.prototype.toJSON = function () {
 };
 
 User.findUserByCredentials = async (email, password) => {
-  const user = await User.findOne({ where: { email } });
+  const user = await User.findOne({ 
+    where: {
+      email
+    },
+    include: Account
+  });
 
   if (!user) {
     throw new Error('Unable to login');

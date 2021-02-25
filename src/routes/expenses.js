@@ -54,6 +54,7 @@ router.post('/accounts/:accountId/expenses', auth, async (req, res) => {
       ...req.body,
       accountId,
     });
+
     res.status(201).send(expense);
   } catch (error) {
     res.status(400).send(error);

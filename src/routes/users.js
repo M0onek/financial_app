@@ -6,11 +6,9 @@ const router = express.Router();
 
 router.post('/signup', async (req, res) => {
   try {
-    console.log(req.body.name);
     const user = await User.create(req.body);
-    // await user.save();
     const token = await user.generateToken();
-    res.status(201).render('home.pug', { user, token });
+    res.status(201).send({ user, token });
   } catch (error) {
     res.status(400).send(error);
   }
@@ -19,8 +17,9 @@ router.post('/signup', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const user = await User.findUserByCredentials(req.body.email, req.body.password);
+    const accounts = user.accounts;
     const token = await user.generateToken();
-    res.send({ user, token });
+    res.send({ user, token, accounts });
   } catch (error) {
     res.status(400).send();
   }

@@ -1,6 +1,8 @@
 import { DataTypes } from 'sequelize';
 import db from '../config/database';
+import { v4 as uuidv4 } from 'uuid';
 import Account from './Account';
+import moment from 'moment';
 
 const IncomeCategory = db.define('incomecategory', {
   // accountId: {
@@ -12,6 +14,7 @@ const IncomeCategory = db.define('incomecategory', {
     type: DataTypes.UUIDV4,
     primaryKey: true,
     autoIncrement: true,
+    defaultValue: DataTypes.UUIDV4,
   },
   name: {
     type: DataTypes.STRING(50),

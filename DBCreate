@@ -1,66 +1,62 @@
-CREATE DATABASE financial_app;
-
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
 CREATE TABLE "users" (
-    "userId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "userId" uuid PRIMARY KEY,
     "name" varchar(50) NOT NULL UNIQUE,
     "password" varchar(255) NOT NULL,
     "email" varchar(255) NOT NULL UNIQUE,
-    "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL,
-    "tokens" text[] NOT NULL
+    "createdAt" timestamp,
+    "updatedAt" timestamp,
+    "tokens" json[] NOT NULL
 );
 
 CREATE TABLE "accounts" (
     "userId" uuid NOT NULL,
-    "accountId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
-    "name" varchar(50) NOT NULL,
-    "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL,
+    "accountId" uuid PRIMARY KEY,
+    "name" varchar(50) NOT NULL UNIQUE,
+    "createdAt" timestamp,
+    "updatedAt" timestamp,
     FOREIGN KEY ("userId") REFERENCES public."users" ("userId") ON DELETE CASCADE
 );
 
 CREATE TABLE "incomecategories" (
-    "categoryId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "categoryId" uuid PRIMARY KEY,
     "accountId" uuid NOT NULL,
     "name" varchar(50) NOT NULL UNIQUE,
-    "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL,
+    "createdAt" timestamp,
+    "updatedAt" timestamp,
     FOREIGN KEY ("accountId") REFERENCES public."accounts" ("accountId") ON DELETE CASCADE
 );
 
 CREATE TABLE "expensecategories" (
-    "categoryId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "categoryId" uuid PRIMARY KEY,
     "accountId" uuid NOT NULL,
     "name" varchar(50) NOT NULL UNIQUE,
-    "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL,
+    "createdAt" timestamp,
+    "updatedAt" timestamp,
     FOREIGN KEY ("accountId") REFERENCES public."accounts" ("accountId") ON DELETE CASCADE
 );
 
 CREATE TABLE "incomes" (
-    "incomeId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "incomeId" uuid PRIMARY KEY,
     "accountId" uuid NOT NULL,
     "amount" decimal NOT NULL,
     "categoryId" uuid NOT NULL,
     "comment" varchar(255),
-    "date" DATE NOT NULL DEFAULT CURRENT_DATE,
-    "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL,
+    "date" timestamp NOT NULL DEFAULT CURRENT_DATE,
+    "createdAt" timestamp,
+    "updatedAt" timestamp,
     FOREIGN KEY ("accountId") REFERENCES public."accounts" ("accountId") ON DELETE CASCADE,
     FOREIGN KEY ("categoryId") REFERENCES public."incomecategories" ("categoryId") ON DELETE CASCADE
 );
 
 CREATE TABLE "expenses" (
-    "expenseId" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "expenseId" uuid PRIMARY KEY,
     "accountId" uuid NOT NULL,
     "amount" decimal NOT NULL,
     "categoryId" uuid NOT NULL,
     "comment" varchar(255),
-    "date" DATE NOT NULL DEFAULT CURRENT_DATE,
-    "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL,
+    "date" timestamp NOT NULL DEFAULT CURRENT_DATE,
+    "createdAt" timestamp,
+    "updatedAt" timestamp,
     FOREIGN KEY ("accountId") REFERENCES public."accounts" ("accountId") ON DELETE CASCADE,
     FOREIGN KEY ("categoryId") REFERENCES public."expensecategories" ("categoryId") ON DELETE CASCADE
 );
